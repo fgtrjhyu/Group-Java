@@ -1,5 +1,3 @@
-import java.util.Collection;
-
 /**
  * Created by fgtrjhyu on 15/03/28.
  */
@@ -8,7 +6,7 @@ public class Group<T> {
     public Member.Represent first;
 
     protected boolean equivalent(T that, T other) {
-        return that.equals(other);
+        return is(that, other);
     }
 
     private void addMember(Member other) {
@@ -27,6 +25,10 @@ public class Group<T> {
         for (T other : others) {
             add(other);
         }
+    }
+
+    protected <U> boolean is(U that, U other) {
+        return (that == other) || ((that != null && other != null) && (that.equals(other)));
     }
 
     public class Member {
@@ -52,9 +54,8 @@ public class Group<T> {
         }
 
         public class Represent {
-            public Represent next;
-
             public final Member first = Member.this;
+            public Represent next;
 
             public void add(Member other) {
                 if (group(other)) {
